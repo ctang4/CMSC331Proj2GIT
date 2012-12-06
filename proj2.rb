@@ -84,8 +84,6 @@ class Proj2 < App
   
   def levelSelect
     
-    #Location of levels
-    #Figure out how to find this directory on any computer?
     levelList = Dir.entries("levels")
     levelList.delete_if {|x| x == "." || x == ".."}
           
@@ -101,8 +99,8 @@ class Proj2 < App
     
     #Launch game window
     @mainFrame.evt_button(selectButton.get_id) {
-      level = levelListBox.get_selections() 
-      playGame(levelListBox.get_string(level[0])) }
+      level = levelListBox.get_selections()
+    playGame(levelListBox.get_string(level[0])) }
     @mainFrame.evt_button(backButton.get_id) { 
       @menuSizer.show(false)
       @menuSizer.clear()
@@ -113,8 +111,33 @@ class Proj2 < App
 
   end
   
-  def playGame(file)
-     puts(file)
+  def playGame(filename)
+    file = File.open("levels\\" + filename, "r")
+    puts(filename)
+    
+    #Testing to read levels
+    puts(File.read(file))
+    data = File.read(file).split("")
+    convertedData = ""
+    
+    for i in data
+      if i == "x"
+        convertedData.concat("W")
+      elsif i == "o"
+        convertedData.concat("F")
+      elsif i == "1"
+        convertedData.concat("P")
+      elsif i == "2"
+        convertedData.concat("B")
+      elsif i == "3"
+        convertedData.concat("G")
+      else
+        convertedData.concat(i)
+      end
+    end
+    
+    puts(convertedData)
+    
   end
   
 end
