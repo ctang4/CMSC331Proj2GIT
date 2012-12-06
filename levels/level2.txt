@@ -1,5 +1,12 @@
-xxxxxxxxx
-xoooooo3x
-xooooooox
-x12ooooox
-xxxxxxxxx
+23,
+10,
+x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,
+o,o,o,1,o,o,o,o,o,o,o,o,o,x,x,x,x,x,x,x,x,x,x,
+x,x,x,o,x,x,x,x,x,3,o,o,o,x,x,x,x,x,x,x,x,x,x,
+x,x,x,o,x,x,x,x,x,o,o,o,o,x,x,x,x,x,x,x,x,x,x,
+x,x,x,o,x,x,x,x,x,o,x,x,x,x,x,x,x,x,x,x,x,x,x,
+o,o,o,o,x,x,x,x,x,o,o,o,o,o,o,o,x,x,x,x,x,x,x,
+x,x,x,o,x,x,x,x,x,o,x,x,x,x,x,o,x,x,x,x,x,x,x,
+x,x,x,o,x,x,x,x,x,o,x,x,x,x,x,o,o,o,o,x,x,x,x,
+x,x,x,o,o,o,o,o,o,o,o,o,o,o,o,2,o,o,o,x,x,x,x,
+x,x,x,x,x,x,x,x,x,x,x,x,x,x,o,o,o,o,o,x,x,x,x,
