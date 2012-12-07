@@ -18,11 +18,7 @@ class Proj2 < App
     mainSizer.add(logoSizer, 0, ALIGN_CENTER, 2)
     mainSizer.add(@menuSizer, 0, ALIGN_CENTER, 2)
     
-    #Ask about drawing!!
     logo = Bitmap.from_image(Image.new("images\\logo.jpg", BITMAP_TYPE_JPEG))
-    #@mainFrame.paint {
-    #  |dc|
-    #  dc.draw_bitmap(logo, 10, 10, false) }
     
     #Preferred method of displaying images, imo
     logoButton = BitmapButton.new(@mainFrame, :bitmap => logo, :style => SUNKEN_BORDER) 
@@ -69,53 +65,53 @@ class Proj2 < App
     keySizer = GridSizer.new(2)
     #Display game instructions. Make it graphical.
     wButton = StaticBitmap.new(@mainFrame, :label => Bitmap.new("images\\wkey.bmp")) 
-    keySizer.add(wButton, 0, ALIGN_CENTER, 2)
+    keySizer.add(wButton, 0, ALIGN_CENTER | ALIGN_CENTER_VERTICAL, 2)
     
     wLabel = StaticText.new(@mainFrame, :label => "Moves forward\n")
     wLabel.set_foreground_colour(Wx::RED)
-    keySizer.add(wLabel, 0, ALIGN_LEFT, 2)
+    keySizer.add(wLabel, 0, ALIGN_LEFT | ALIGN_CENTER_VERTICAL, 2)
     
     sButton = StaticBitmap.new(@mainFrame, :label => Bitmap.new("images\\skey.bmp")) 
-    keySizer.add(sButton, 0, ALIGN_CENTER, 2)
+    keySizer.add(sButton, 0, ALIGN_CENTER | ALIGN_CENTER_VERTICAL, 2)
     
     sLabel = StaticText.new(@mainFrame, :label => "Moves backward")
     sLabel.set_foreground_colour(Wx::RED)
-    keySizer.add(sLabel, 0, ALIGN_LEFT, 2)
+    keySizer.add(sLabel, 0, ALIGN_LEFT | ALIGN_CENTER_VERTICAL, 2)
         
     aButton = StaticBitmap.new(@mainFrame, :label => Bitmap.new("images\\akey.bmp")) 
-    keySizer.add(aButton, 0, ALIGN_CENTER, 2)
+    keySizer.add(aButton, 0, ALIGN_CENTER | ALIGN_CENTER_VERTICAL, 2)
     
     aLabel = StaticText.new(@mainFrame, :label => "Moves left")
     aLabel.set_foreground_colour(Wx::RED)
-    keySizer.add(aLabel, 0, ALIGN_LEFT, 2)
+    keySizer.add(aLabel, 0, ALIGN_LEFT | ALIGN_CENTER_VERTICAL, 2)
     
     dButton = StaticBitmap.new(@mainFrame, :label => Bitmap.new("images\\dkey.bmp")) 
-    keySizer.add(dButton, 0, ALIGN_CENTER, 2)
+    keySizer.add(dButton, 0, ALIGN_CENTER | ALIGN_CENTER_VERTICAL, 2)
     
     dLabel = StaticText.new(@mainFrame, :label => "Moves right")
     dLabel.set_foreground_colour(Wx::RED)
-    keySizer.add(dLabel, 0, ALIGN_LEFT, 2)
+    keySizer.add(dLabel, 0, ALIGN_LEFT | Wx::ALIGN_CENTER_VERTICAL, 2)
     
     qButton = StaticBitmap.new(@mainFrame, :label => Bitmap.new("images\\qkey.bmp")) 
-    keySizer.add(qButton, 0, ALIGN_CENTER, 2)
+    keySizer.add(qButton, 0, ALIGN_CENTER | ALIGN_CENTER_VERTICAL, 2)
     
     qLabel = StaticText.new(@mainFrame, :label => "Quits the game")
     qLabel.set_foreground_colour(Wx::RED)
-    keySizer.add(qLabel, 0, ALIGN_LEFT, 2)
+    keySizer.add(qLabel, 0, ALIGN_LEFT | Wx::ALIGN_CENTER_VERTICAL, 2)
     
     eButton = StaticBitmap.new(@mainFrame, :label => Bitmap.new("images\\ekey.bmp")) 
-    keySizer.add(eButton, 0, ALIGN_CENTER, 2)
+    keySizer.add(eButton, 0, ALIGN_CENTER | ALIGN_CENTER_VERTICAL, 2)
     
     eLabel = StaticText.new(@mainFrame, :label => "Grabs the block to move it")
     eLabel.set_foreground_colour(Wx::RED)
-    keySizer.add(eLabel, 0, ALIGN_LEFT, 2)
+    keySizer.add(eLabel, 0, ALIGN_LEFT | ALIGN_CENTER_VERTICAL, 2)
     
     rButton = StaticBitmap.new(@mainFrame, :label => Bitmap.new("images\\rkey.bmp")) 
-    keySizer.add(rButton, 0, ALIGN_CENTER, 2)
+    keySizer.add(rButton, 0, ALIGN_CENTER | ALIGN_CENTER_VERTICAL, 2)
     
     rLabel = StaticText.new(@mainFrame, :label => "Resets the level")
     rLabel.set_foreground_colour(Wx::RED)
-    keySizer.add(rLabel, 0, ALIGN_LEFT, 2)
+    keySizer.add(rLabel, 0, ALIGN_LEFT | Wx::ALIGN_CENTER_VERTICAL, 2)
         
     #ADD PLAYER, BLOCK, AND GOAL TO INSTRUCTIONS!
     
@@ -151,7 +147,7 @@ class Proj2 < App
     #Launch game window
     @mainFrame.evt_button(selectButton.get_id) {
       level = levelListBox.get_selections()
-    loadGame(levelListBox.get_string(level[0])) }
+      loadGame(levelListBox.get_string(level[0])) }
     @mainFrame.evt_button(backButton.get_id) { 
       @menuSizer.show(false)
       @menuSizer.clear()
@@ -163,22 +159,32 @@ class Proj2 < App
   end
   
   def loadGame(filename)
+    
     file = File.open("levels\\" + filename, "r")
-    puts(filename)
-    
-    gameSize = Size.new(500, 500)
-    @gameFrame = Frame.new(nil, :title => filename, :size => gameSize)
-    
-    @gameFrame.show()
     
     #Testing to read levels
-    puts(File.read(file))
-    data = File.read(file).split(",")
+    data = File.read(file).split
     convertedData = ""
+    numRows = Integer(data[0])
+    numCols = Integer(data[1])
+
+    data.delete_at(0)
+    data.delete_at(0)
+    
+    gameSize = Size.new(53 * numRows, 49 * numCols)
+    @gameFrame = Frame.new(nil, :title => filename, :size => gameSize)
+   
+    @mapGrid = GridBagSizer.new(49, 53)
+    @gameFrame.set_sizer(@mapGrid)
+    
+    itemToPlace = 1
+    image = StaticBitmap.new(@gameFrame, :label => Bitmap.new("images\\basicSquare.bmp"))
+    checker = @mapGrid.add(image, GBPosition.new(0, 0))
+      puts checker
     
     for i in data
       if i == "x"
-        convertedData.concat("W")
+        
       elsif i == "o"
         convertedData.concat("F")
       elsif i == "1"
@@ -187,14 +193,12 @@ class Proj2 < App
         convertedData.concat("B")
       elsif i == "3"
         convertedData.concat("G")
-      elsif i == "\n"
-        convertedData.concat("\n")
       else
-        convertedData.concat(i)
       end
     end
     
-    puts(convertedData)
+    
+    @gameFrame.show()
     
   end
   
