@@ -7,7 +7,7 @@ class Proj2 < App
     
     backgroundColour = Colour.new(51, 51, 51)
     windowSize = Size.new(500, 400)
-    @mainFrame = Frame.new(nil, :title => 'Blockssssss', :size => windowSize)
+    @mainFrame = Frame.new(nil, 1, :title => 'Blockssssss', :size => windowSize)
     @mainFrame.set_background_colour(backgroundColour)
     
     mainSizer = BoxSizer.new(VERTICAL)
@@ -20,7 +20,6 @@ class Proj2 < App
     
     logo = Bitmap.from_image(Image.new("images\\logo.jpg", BITMAP_TYPE_JPEG))
     
-    #Preferred method of displaying images, imo
     logoButton = BitmapButton.new(@mainFrame, :bitmap => logo, :style => SUNKEN_BORDER) 
     logoSizer.add(logoButton, 0, ALIGN_CENTER, 2)
      
@@ -165,38 +164,38 @@ class Proj2 < App
     #Testing to read levels
     data = File.read(file).split
     convertedData = ""
-    numRows = Integer(data[0])
-    numCols = Integer(data[1])
+    numCols = Integer(data[0])
+    numRows = Integer(data[1])
 
+    #Remove Row and Column data
     data.delete_at(0)
-    data.delete_at(0)
+    data.delete_at(0) 
     
-    gameSize = Size.new(53 * numRows, 49 * numCols)
-    @gameFrame = Frame.new(nil, :title => filename, :size => gameSize)
+    gameSize = Size.new(53 * numCols, 49 * numRows)
+    @gameFrame = Frame.new(nil, 2, :title => filename, :size => gameSize)
    
-    @mapGrid = GridBagSizer.new(49, 53)
-    @gameFrame.set_sizer(@mapGrid)
-    
-    itemToPlace = 1
-    image = StaticBitmap.new(@gameFrame, :label => Bitmap.new("images\\basicSquare.bmp"))
-    checker = @mapGrid.add(image, GBPosition.new(0, 0))
-      puts checker
+    @mapGrid = GridSizer.new(numRows, numCols, 0, 0)
     
     for i in data
       if i == "x"
-        
+        @mapGrid.add(StaticBitmap.new(@gameFrame, :label => Bitmap.new("images\\wallBrown.bmp")), 0, EXPAND)
       elsif i == "o"
-        convertedData.concat("F")
+        @mapGrid.add(StaticBitmap.new(@gameFrame, :label => Bitmap.new("images\\basicSquare.bmp")), 0, EXPAND)
       elsif i == "1"
-        convertedData.concat("P")
+        @mapGrid.add(StaticBitmap.new(@gameFrame, :label => Bitmap.new("images\\walkDown.bmp")), 0, EXPAND)
       elsif i == "2"
-        convertedData.concat("B")
+        @mapGrid.add(StaticBitmap.new(@gameFrame, :label => Bitmap.new("images\\wallGreen.bmp")), 0, EXPAND)
       elsif i == "3"
-        convertedData.concat("G")
+        @mapGrid.add(StaticBitmap.new(@gameFrame, :label => Bitmap.new("images\\goalSquare.bmp")), 0, EXPAND)
       else
       end
     end
+        
+    @mapGrid.layout
     
+    gameSizer = BoxSizer.new(VERTICAL)
+    gameSizer.add(@mapGrid, 0, ALIGN_CENTER, 0)
+    @gameFrame.set_sizer(gameSizer)
     
     @gameFrame.show()
     
