@@ -34,12 +34,14 @@ class Proj2 < App
   def displayMenu
     
     #Make button graphics
-    playButton = Button.new(@mainFrame, -1, "Play")
-    infoButton = Button.new(@mainFrame, -1, "Instructions")
+    
+    playButton = BitmapButton.new(@mainFrame, -1, :bitmap => Bitmap.new("images\\buttonPlay.bmp"), :style => SUNKEN_BORDER)
+    infoButton = BitmapButton.new(@mainFrame, -1, :bitmap => Bitmap.new("images\\backupButton.bmp"), :style => SUNKEN_BORDER)
     quitButton = Button.new(@mainFrame, -1, "Quit")
     
+    @menuSizer.insert_spacer(-1, 20)
     @menuSizer.add(playButton, 0, ALIGN_CENTER, 2)
-    @menuSizer.add(infoButton, 0, ALIGN_CENTER, 2)  
+    @menuSizer.add(infoButton, 0, ALIGN_CENTER, 2) 
     @menuSizer.add(quitButton, 0, ALIGN_CENTER, 2)
     
     @mainFrame.evt_button(playButton.get_id) { 
@@ -89,7 +91,7 @@ class Proj2 < App
     
     dLabel = StaticText.new(@mainFrame, :label => "Moves right")
     dLabel.set_foreground_colour(Wx::RED)
-    keySizer.add(dLabel, 0, ALIGN_LEFT | Wx::ALIGN_CENTER_VERTICAL, 2)
+    keySizer.add(dLabel, 0, ALIGN_LEFT | ALIGN_CENTER_VERTICAL, 2)
     
     qButton = StaticBitmap.new(@mainFrame, :label => Bitmap.new("images\\qkey.bmp")) 
     keySizer.add(qButton, 0, ALIGN_CENTER | ALIGN_CENTER_VERTICAL, 2)
@@ -176,28 +178,42 @@ class Proj2 < App
    
     @mapGrid = GridSizer.new(numRows, numCols, 0, 0)
     
+    indexToAdd = 1
+    
     for i in data
       if i == "x"
-        @mapGrid.add(StaticBitmap.new(@gameFrame, :label => Bitmap.new("images\\wallBrown.bmp")), 0, EXPAND)
+        @mapGrid.add(StaticBitmap.new(@gameFrame, indexToAdd, :label => Bitmap.new("images\\wallBrown.bmp")), 0, EXPAND)
+        indexToAdd += 1
       elsif i == "o"
-        @mapGrid.add(StaticBitmap.new(@gameFrame, :label => Bitmap.new("images\\basicSquare.bmp")), 0, EXPAND)
+        @mapGrid.add(StaticBitmap.new(@gameFrame, indexToAdd, :label => Bitmap.new("images\\basicSquare.bmp")), 0, EXPAND)
+        indexToAdd += 1
       elsif i == "1"
-        @mapGrid.add(StaticBitmap.new(@gameFrame, :label => Bitmap.new("images\\walkDown.bmp")), 0, EXPAND)
+        @mapGrid.add(StaticBitmap.new(@gameFrame, indexToAdd, :label => Bitmap.new("images\\walkDown.bmp")), 0, EXPAND)
+        indexToAdd += 1
       elsif i == "2"
-        @mapGrid.add(StaticBitmap.new(@gameFrame, :label => Bitmap.new("images\\wallGreen.bmp")), 0, EXPAND)
+        @mapGrid.add(StaticBitmap.new(@gameFrame, indexToAdd, :label => Bitmap.new("images\\wallGreen.bmp")), 0, EXPAND)
+        indexToAdd += 1
       elsif i == "3"
-        @mapGrid.add(StaticBitmap.new(@gameFrame, :label => Bitmap.new("images\\goalSquare.bmp")), 0, EXPAND)
-      else
+        @mapGrid.add(StaticBitmap.new(@gameFrame, indexToAdd, :label => Bitmap.new("images\\goalSquare.bmp")), 0, EXPAND)  
+        indexToAdd += 1
       end
     end
         
     @mapGrid.layout
     
     gameSizer = BoxSizer.new(VERTICAL)
-    gameSizer.add(@mapGrid, 0, ALIGN_CENTER, 0)
+    gameSizer.add(@mapGrid, 0, ALIGN_CENTER|ALIGN_CENTER_VERTICAL, 0)
     @gameFrame.set_sizer(gameSizer)
+    @gameFrame.fit
+    @gameFrame.set_background_colour(Colour.new(0, 0, 0))
     
     @gameFrame.show()
+    
+    playGame
+    
+  end
+  
+  def playGame
     
   end
   
