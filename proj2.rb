@@ -272,6 +272,10 @@ class Proj2 < App
               set_bitmap(Bitmap.new("images\\basicSquare.bmp"))
             @spaceIndex.delete(@playerIndex - 1)
             @spaceIndex.push(@playerIndex)
+            if @playerIndex == @goalIndex
+              @mapGrid.get_item(@playerIndex).get_window().
+                set_bitmap(Bitmap.new("images\\goalSquare.bmp"))
+            end
             @playerIndex = @playerIndex - 1
           else
             @mapGrid.get_item(@playerIndex).get_window().
@@ -290,6 +294,10 @@ class Proj2 < App
             @spaceIndex.push(@playerIndex)
             @playerIndex = @playerIndex - 1
             @blockIndex = @blockIndex - 1
+            if @blockIndex == @goalIndex
+              MessageDialog.new(@gameFrame, "You won!", "Winner!", OK).show_modal
+              @gameFrame.destroy
+            end
            end
         elsif playerGrabbing == true && playerFacing == "e"
           spaceAhead = canMove?("w", 0)
@@ -304,6 +312,10 @@ class Proj2 < App
             @spaceIndex.push(@blockIndex)
             @playerIndex = @playerIndex - 1
             @blockIndex = @blockIndex - 1
+            if @blockIndex == @goalIndex
+              MessageDialog.new(@gameFrame, "You won!", "Winner!", OK).show_modal
+              @gameFrame.destroy
+            end
           end
         end
         
@@ -320,6 +332,10 @@ class Proj2 < App
               set_bitmap(Bitmap.new("images\\basicSquare.bmp"))
             @spaceIndex.delete(@playerIndex + @numCols)
             @spaceIndex.push(@playerIndex)
+            if @playerIndex == @goalIndex
+              @mapGrid.get_item(@playerIndex).get_window().
+                set_bitmap(Bitmap.new("images\\goalSquare.bmp"))
+            end
             @playerIndex = @playerIndex + @numCols
           else
             @mapGrid.get_item(@playerIndex).get_window().
@@ -338,6 +354,10 @@ class Proj2 < App
             @spaceIndex.push(@playerIndex)
             @playerIndex = @playerIndex + @numCols
             @blockIndex = @blockIndex + @numCols
+            if @blockIndex == @goalIndex
+              MessageDialog.new(@gameFrame, "You won!", "Winner!", OK).show_modal
+              @gameFrame.destroy
+            end
            end
         elsif playerGrabbing == true && playerFacing == "n"
           spaceAhead = canMove?("s", 0)
@@ -352,6 +372,10 @@ class Proj2 < App
             @spaceIndex.push(@blockIndex)
             @playerIndex = @playerIndex + @numCols
             @blockIndex = @blockIndex + @numCols
+            if @blockIndex == @goalIndex
+              MessageDialog.new(@gameFrame, "You won!", "Winner!", OK).show_modal
+              @gameFrame.destroy
+            end
           end 
         end
         
@@ -367,6 +391,10 @@ class Proj2 < App
               set_bitmap(Bitmap.new("images\\basicSquare.bmp"))
             @spaceIndex.delete(@playerIndex + 1)
             @spaceIndex.push(@playerIndex)
+            if @playerIndex == @goalIndex
+              @mapGrid.get_item(@playerIndex).get_window().
+                set_bitmap(Bitmap.new("images\\goalSquare.bmp"))
+            end
             @playerIndex = @playerIndex + 1
           else
             @mapGrid.get_item(@playerIndex).get_window().
@@ -385,6 +413,10 @@ class Proj2 < App
             @spaceIndex.push(@playerIndex)
             @playerIndex = @playerIndex + 1
             @blockIndex = @blockIndex + 1
+            if @blockIndex == @goalIndex
+              MessageDialog.new(@gameFrame, "You won!", "Winner!", OK).show_modal
+              @gameFrame.destroy
+            end
            end
         elsif playerGrabbing == true && playerFacing == "w"
           spaceAhead = canMove?("e", 0)
@@ -399,6 +431,10 @@ class Proj2 < App
             @spaceIndex.push(@blockIndex)
             @playerIndex = @playerIndex + 1
             @blockIndex = @blockIndex + 1
+            if @blockIndex == @goalIndex
+              MessageDialog.new(@gameFrame, "You won!", "Winner!", OK).show_modal
+              @gameFrame.destroy
+            end
           end 
         end
         
@@ -414,6 +450,10 @@ class Proj2 < App
               set_bitmap(Bitmap.new("images\\basicSquare.bmp"))
             @spaceIndex.delete(@playerIndex - @numCols)
             @spaceIndex.push(@playerIndex)
+            if @playerIndex == @goalIndex
+              @mapGrid.get_item(@playerIndex).get_window().
+                set_bitmap(Bitmap.new("images\\goalSquare.bmp"))
+            end
             @playerIndex = @playerIndex - @numCols
           else
             @mapGrid.get_item(@playerIndex).get_window().
@@ -432,6 +472,10 @@ class Proj2 < App
             @spaceIndex.push(@playerIndex)
             @playerIndex = @playerIndex - @numCols
             @blockIndex = @blockIndex - @numCols
+            if @blockIndex == @goalIndex
+              MessageDialog.new(@gameFrame, "You won!", "Winner!", OK).show_modal
+              @gameFrame.destroy
+            end
            end
         elsif playerGrabbing == true && playerFacing == "s"
           spaceAhead = canMove?("n", 0)
@@ -446,6 +490,10 @@ class Proj2 < App
             @spaceIndex.push(@blockIndex)
             @playerIndex = @playerIndex - @numCols
             @blockIndex = @blockIndex - @numCols
+            if @blockIndex == @goalIndex
+              MessageDialog.new(@gameFrame, "You won!", "Winner!", OK).show_modal
+              @gameFrame.destroy
+            end
            end
          end
         
